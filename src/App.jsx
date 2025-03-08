@@ -12,6 +12,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { useSelector, useDispatch } from 'react-redux'
 import { selectLoadedModels } from './redux.js/loadedModelsSlice'
 import { setAnimalsModel, setMyModel, setCocossdModel } from './redux.js/loadedModelsSlice'
+import { lazy, Suspense } from 'react'
 
 const AppContainer = styled.div`
   display: flex;
@@ -108,23 +109,25 @@ function App({ children }) {
 
   return (
     <>
-      <AppContainer>
-        { isLoading ?
-          <>
-            <div className='loading'>
-              <img src={catscan2x} alt='catscan-logo'/>
-              <AiOutlineLoading3Quarters className='loading-icon'/>
-            </div>
-          </> :
-          <>
-            {children || <Outlet context={{ cocossdModel, myModel, animalsModel }}/>}
-            <footer>
-              <p>Created by Cao Duy Nguyen</p>
-              <NavLink to='/about' className='about-btn' style={{ textDecoration: 'none' }}>About</NavLink>
-            </footer>
-          </>
-        }
-      </AppContainer>
+      <Suspense fallback={<div>Loading...</div>}>
+        <AppContainer>
+          { isLoading ?
+            <>
+              <div className='loading'>
+                <img src={catscan2x} alt='catscan-logo'/>
+                <AiOutlineLoading3Quarters className='loading-icon'/>
+              </div>
+            </> :
+            <>
+              {children || <Outlet context={{ cocossdModel, myModel, animalsModel }}/>}
+              <footer>
+                <p>Created by Cao Duy Nguyen</p>
+                <NavLink to='/about' className='about-btn' style={{ textDecoration: 'none' }}>About</NavLink>
+              </footer>
+            </>
+          }
+        </AppContainer>
+      </Suspense>
     </>
   )
 }
