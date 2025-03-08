@@ -21,6 +21,7 @@ const InsertPhotoContainer = styled.div`
     .scanning-text {
         animation: fadeInOut 1.5s infinite;
         padding: 20px;
+        font-weight: bold;
     }
     @keyframes fadeInOut {
         0% { opacity: 0; }
@@ -354,9 +355,6 @@ export default function InsertPhoto() {
                     })
                     .catch((err) => {
                         console.error("Error generating image", err)
-                    })
-                    .finally(() => {
-                        setAdjust(false)
                     })
             }
             setAdjust(false)
